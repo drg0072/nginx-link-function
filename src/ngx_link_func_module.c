@@ -2460,6 +2460,29 @@ ngx_http_link_func_http_request(ngx_conf_t *cf, ngx_http_link_func_srv_conf_t* s
     return hhb;
 }
 
+// Function to get the client IP address
+u_char* get_request_client_ip(ngx_link_func_ctx_t *ctx) {
+    if (ctx == NULL || ctx->__r__ == NULL) {
+        return NULL;
+    }
+
+    ngx_http_request_t *r = (ngx_http_request_t*)ctx->__r__;  // Assuming ctx has a member __r__ of type ngx_http_request_t
+    ngx_str_t addr_text = r->connection->addr_text;
+
+    // Allocate memory for the IP address
+    char* ip_copy = (char*)malloc(addr_text.len + 1);
+    if (ip_copy == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+    }
+
+    // Copy the IP address
+    strncpy(ip_copy, (const char*)addr_text.data, addr_text.len);
+    ip_copy[addr_text.len] = '\0';
+
+    return ip_copy;
+}
+
 #if (NGX_SSL || NGX_OPENSSL)
 
 static int

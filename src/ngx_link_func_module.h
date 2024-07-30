@@ -154,4 +154,6 @@ extern void* ngx_link_func_cache_put(void *shared_mem, const char* key, void* va
 extern void* ngx_link_func_cache_new(void *shared_mem, const char* key, size_t size);
 extern void* ngx_link_func_cache_remove(void *shared_mem, const char* key);
 
+extern u_char* get_request_client_ip(ngx_link_func_ctx_t *ctx);
+
 #endif /* _NGX_LINK_FUNC_APP_H_INCLUDED_ */
